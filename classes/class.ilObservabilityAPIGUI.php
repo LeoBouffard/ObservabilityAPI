@@ -1,6 +1,6 @@
 <?php
 
-include_once("./Customizing/global/plugins/Services/ObservabilityAPI/class.ilObservabilityAPIHandler.php");
+include_once("./Customizing/global/plugins/Services/ObservabilityAPI/classes/class.ilObservabilityAPIHandler.php");
 
 class ilObservabilityAPIGUI
 {
