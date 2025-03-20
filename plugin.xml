@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<plugin id="ObservabilityAPI"
+        version="1.0.0"
+        ilias_min_version="8.0"
+        ilias_max_version="8.999"
+        responsible="Ton Nom"
+        responsible_mail="ton@email.com">
+    <name>ObservabilityAPI</name>
+    <description>Plugin pour afficher l'état de santé du SI via FastAPI</description>
+</plugin>
+<commands>
+    <command name="showHealthStatus" class="ilObservabilityAPIGUI"/>
+    <command name="showInfoStatus" class="ilObservabilityAPIGUI"/>
+</commands>
