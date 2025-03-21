@@ -5,7 +5,7 @@ include_once("./Services/Component/classes/class.ilPlugin.php");
 class ilObservabilityAPIPlugin extends ilPlugin
 {
 
-    public function init()
+    function init(): void
     {
         $plugin = new ilObservabilityAPIPlugin();
         $plugin->addToMenu();
