@@ -1,18 +1,8 @@
 <?php
-
-include_once("./Services/Component/classes/class.ilPlugin.php");
-
-class ilObservabilityAPIPlugin extends ilPlugin
-{
-
-    function init(): void
-    {
-        $plugin = new ilObservabilityAPIPlugin();
-        $plugin->addToMenu();
-    }
-
-    function getPluginName(): string
-    {
-        return "ObservabilityAPI";
-    }
-}
+$id = "ObservabilityAPI";  // Mets le bon ID du plugin ici
+$version = "1.0.0"; // Adapte selon ta version
+$ilias_min_version = "8.0";
+$ilias_max_version = "8.999";
+$responsible = "Léo Bouffard";
+$responsible_mail = "leo.bouffard@intradef.gouv.fr";
+?>
