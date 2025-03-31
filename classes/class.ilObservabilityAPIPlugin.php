@@ -4,6 +4,16 @@ include_once("./Services/Component/classes/class.ilPlugin.php");
 
 class ilObservabilityAPIPlugin extends ilPlugin
 {
+    private static $instance = null;
+
+    public static function getInstance(): ilObservabilityAPIPlugin
+    {
+        if (self::$instance === null) {
+            self::$instance = new ilObservabilityAPIPlugin();
+        }
+        return self::$instance;
+    }
+
     function getPluginName(): string
     {
         return "ObservabilityAPI";
