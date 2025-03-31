@@ -4,9 +4,9 @@ include_once("./Services/Component/classes/class.ilPlugin.php");
 
 class ilObservabilityAPIPlugin extends ilPlugin
 {
-    function __construct()
+    function __construct(string $a_id, string $a_version, string $a_ilias_version)
     {
-        parent::__construct();
+        parent::__construct($a_id, $a_version, $a_ilias_version);
     }
 
     function getPluginName(): string
