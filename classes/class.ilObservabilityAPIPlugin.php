@@ -5,7 +5,6 @@ include_once("./Services/Component/classes/class.ilPlugin.php");
 class ilObservabilityAPIPlugin extends ilPlugin
 {
     private static $instance = null;
-    protected ilComponentFactory $component_factory = ;
 
     public static function getInstance(): ilObservabilityAPIPlugin
     {
