@@ -8,17 +8,16 @@ class ilObservabilityAPIPlugin extends ilPlugin
 
     public static function getInstance() : ilObservabilityAPIPlugin
     {
-        if (self::$instance === null) {
-            global $DIC;
-            self::$instance = new ilObservabilityAPIPlugin(
-                "Services", 
-                "UIComponent", 
-                "uihk", 
+        if (null === self::$instance) {
+            return self::$instance = ilPlugin::getPluginObject(
+                "Services",
+                "UIComponent",
+                "uihk",
                 "ObservabilityAPI"
             );
         }
-        return self::$instance;
 
+        return self::$instance;
     }
 
     function getPluginName(): string
