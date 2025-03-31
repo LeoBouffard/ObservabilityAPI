@@ -19,7 +19,7 @@ class ilObservabilityAPIPlugin extends ilPlugin
         return "http://127.0.0.1:8000"; // Modifie si l'API est sur une autre IP
     }
 
-    public function addToMenu()
+    public function addToMenu(): void
     {
         global $ilMainMenu;
         $ilMainMenu->addItem(
@@ -37,7 +37,7 @@ class ilObservabilityAPIPlugin extends ilPlugin
     /**
      * Méthode appelée après l'activation du plugin
      */
-    protected function afterActivation()
+    protected function afterActivation(): void
     {
         $this->addToMenu();
     }
