@@ -41,5 +41,15 @@ class ilObservabilityAPIPlugin extends ilPlugin
     {
         $this->addToMenu();
     }
+
+    /**
+     * Cette méthode doit retourner l'instance de la classe UI pour le plugin.
+     * Ajoutez cette méthode dans votre plugin.
+     */
+    public function getUIClassInstance(): ilObservabilityAPIGUI
+    {
+        return new ilObservabilityAPIGUI();
+    }
+
 }
 ?>
