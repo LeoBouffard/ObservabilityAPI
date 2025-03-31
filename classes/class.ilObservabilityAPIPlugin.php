@@ -4,10 +4,9 @@ include_once("./Services/Component/classes/class.ilPlugin.php");
 
 class ilObservabilityAPIPlugin extends ilPlugin
 {
-    function init(): void
+    function __construct()
     {
-        $plugin = new ilObservabilityAPIPlugin();
-        $plugin->addToMenu();
+        parent::__construct();
     }
 
     function getPluginName(): string
@@ -23,9 +22,24 @@ class ilObservabilityAPIPlugin extends ilPlugin
     public function addToMenu()
     {
         global $ilMainMenu;
-        $ilMainMenu->addItem("Observabilité - Health", "observability_health", "./Customizing/global/plugins/Services/ObservabilityAPI/class.ilObservabilityAPIGUI.php?cmd=showHealthStatus");
-        $ilMainMenu->addItem("Observabilité - Info", "observability_info", "./Customizing/global/plugins/Services/ObservabilityAPI/class.ilObservabilityAPIGUI.php?cmd=showInfoStatus");
+        $ilMainMenu->addItem(
+            "Observabilité - Health",
+            "observability_health",
+            "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIGUI.php?cmd=showHealthStatus"
+        );
+        $ilMainMenu->addItem(
+            "Observabilité - Info",
+            "observability_info",
+            "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIGUI.php?cmd=showInfoStatus"
+        );
     }
 
-
+    /**
+     * Méthode appelée après l'activation du plugin
+     */
+    protected function afterActivation()
+    {
+        $this->addToMenu();
+    }
 }
+?>
