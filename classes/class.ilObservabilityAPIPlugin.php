@@ -17,22 +17,27 @@ class ilObservabilityAPIPlugin extends ilPlugin
     public function addToMenu(): void
     {
         global $ilMainMenu;
+
+        if (!isset($ilMainMenu)) {
+            throw new Exception("Impossible d'accéder au menu principal.");
+        }
+
         $ilMainMenu->addItem(
             "Observabilité - Health",
             "observability_health",
-            "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIGUI.php?cmd=showHealthStatus"
+            "./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus"
         );
         $ilMainMenu->addItem(
             "Observabilité - Info",
             "observability_info",
-            "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIGUI.php?cmd=showInfoStatus"
+            "./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus"
         );
     }
 
     /**
      * Méthode appelée après l'activation du plugin
      */
-    protected function afterActivation(): void
+    public function afterActivation(): void
     {
         $this->addToMenu();
     }

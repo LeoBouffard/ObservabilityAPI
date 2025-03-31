@@ -9,27 +9,26 @@ class ilObservabilityAPIHandler
         $this->plugin = $plugin;
     }
 
-    public function fetchHealthStatus(): array
+    private function fetchData(string $endpoint): array
     {
-        $api_url = $this->plugin->getApiUrl() . "/health";
-        
-        $response = file_get_contents($api_url);
+        $api_url = $this->plugin->getApiUrl() . $endpoint;
+
+        $response = @file_get_contents($api_url);
         if ($response === FALSE) {
-            return ["error" => "Impossible de récupérer les données de l'API"];
+            return ["error" => "Impossible de récupérer les données de l'API ($api_url)"];
         }
 
-        return json_decode($response, true);
+        return json_decode($response, true) ?? ["error" => "Réponse invalide de l'API"];
+    }
+
+    public function fetchHealthStatus(): array
+    {
+        return $this->fetchData("/health");
     }
 
     public function fetchInfoStatus(): array
     {
-        $api_url = $this->plugin->getApiUrl() . "/info";
-        
-        $response = file_get_contents($api_url);
-        if ($response === FALSE) {
-            return ["error" => "Impossible de récupérer les données de l'API"];
-        }
-
-        return json_decode($response, true);
+        return $this->fetchData("/info");
     }
 }
+?>
