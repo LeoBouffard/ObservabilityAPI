@@ -5,13 +5,14 @@ include_once("./Services/Component/classes/class.ilPlugin.php");
 class ilObservabilityAPIPlugin extends ilPlugin
 {
     private static $instance = null;
+    protected ilComponentFactory $component_factory = ;
 
     public static function getInstance(): ilObservabilityAPIPlugin
     {
         global $DIC;
 
         if (self::$instance === null) {
-            $component_factory = $DIC->componentFactory();
+            $component_factory = $DIC['component.repository'];
             self::$instance = $component_factory->getPlugin("ObservabilityAPI");
         }
 
