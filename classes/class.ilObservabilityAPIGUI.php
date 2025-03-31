@@ -1,6 +1,7 @@
 <?php
 
 include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIHandler.php");
+include_once("./Services/Component/classes/class.ilPluginAdmin.php");
 
 class ilObservabilityAPIGUI
 {
@@ -11,7 +12,7 @@ class ilObservabilityAPIGUI
     {
         global $tpl;
         $this->tpl = $tpl;
-        $plugin = new ilObservabilityAPIPlugin();
+        $plugin = ilPluginAdmin::getPluginObject(IL_COMP_SERVICE, "UIComponent", "uihk", "ObservabilityAPI");
         $this->handler = new ilObservabilityAPIHandler($plugin);
     }
 
@@ -55,5 +56,5 @@ class ilObservabilityAPIGUI
 
         $this->tpl->setContent($content);
     }
-
 }
+?>
