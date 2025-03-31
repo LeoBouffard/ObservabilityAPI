@@ -17,18 +17,16 @@ class ilObservabilityAPIPlugin extends ilPlugin
     public function addToMenu(): void
     {
         global $ilMainMenu;
-        global $ilCtrl;
-
         $ilMainMenu->addItem(
             "Observabilité - Health",
             "observability_health",
-            $ilCtrl->getLinkTargetByClass(ilObservabilityAPIGUI::class, "showHealthStatus")
+            "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIGUI.php?cmd=showHealthStatus"
         );
-
         $ilMainMenu->addItem(
             "Observabilité - Info",
             "observability_info",
-            $ilCtrl->getLinkTargetByClass(ilObservabilityAPIGUI::class, "showInfoStatus")        );
+            "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/ObservabilityAPI/classes/class.ilObservabilityAPIGUI.php?cmd=showInfoStatus"
+        );
     }
 
     /**
