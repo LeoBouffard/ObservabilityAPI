@@ -60,5 +60,18 @@ class ilObservabilityAPIGUI
 
         $this->tpl->setContent($content);
     }
+
+    public function modifyGUI($a_comp, $a_part, $a_par = [])
+    {
+        // Vérifie si l'affichage concerne ton plugin
+        if ($a_comp == "UIComponent" && $a_part == "uihk") {
+            if (isset($_GET['cmd']) && $_GET['cmd'] === "showHealthStatus") {
+                $this->showHealthStatus();
+            } elseif (isset($_GET['cmd']) && $_GET['cmd'] === "showInfoStatus") {
+                $this->showInfoStatus();
+            }
+        }
+    }
+
 }
 ?>
