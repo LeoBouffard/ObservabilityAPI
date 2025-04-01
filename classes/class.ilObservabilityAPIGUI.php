@@ -75,7 +75,7 @@ class ilObservabilityAPIGUI
 
     public function getHTML( $a_comp, $a_part,  $a_par = array())
     {
-        return ["mode" => ilObservabilityAPIGUI::KEEP, "html" => ""];
+        return ["mode" => ilUIHookPluginGUI::KEEP, "html" => ""];
     }
 
 
