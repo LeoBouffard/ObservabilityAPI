@@ -11,7 +11,7 @@ class ilObservabilityAPIPlugin extends ilPlugin
         global $DIC;
 
         if (self::$instance === null) {
-            self::$instance = $DIC['component.repository']->getPluginByName("ObservabilityAPI"); //modifier hier pas encore testé (mais normalement ça marche pas)
+            self::$instance = $DIC['component.factory']->getPlugin("ObservabilityAPI"); //modifier hier pas encore testé (mais normalement ça marche pas)
         }
 
         return self::$instance;
