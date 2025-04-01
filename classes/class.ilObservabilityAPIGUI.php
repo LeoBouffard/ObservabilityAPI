@@ -73,5 +73,11 @@ class ilObservabilityAPIGUI
         }
     }
 
+    public function getHTML(): string
+    {
+        return $this->tpl->get(); // Récupère le contenu de `$this->tpl`
+    }
+
+
 }
 ?>
