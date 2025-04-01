@@ -73,9 +73,9 @@ class ilObservabilityAPIGUI
         }
     }
 
-    public function getHTML(): string
+    public function getHTML( $a_comp, $a_part,  $a_par = array())
     {
-        return $this->tpl->get(); // Récupère le contenu de `$this->tpl`
+        return ["mode" => ilObservabilityAPIGUI::KEEP, "html" => ""];
     }
 
 
