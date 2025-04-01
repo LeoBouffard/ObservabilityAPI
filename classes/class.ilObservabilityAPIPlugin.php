@@ -10,13 +10,8 @@ class ilObservabilityAPIPlugin extends ilPlugin
     {
         global $DIC;
 
-        if (null === self::$instance) {
-            return self::$instance = ilPluginAdmin::getPluginInfo(
-                "Services",
-                "UIComponent",
-                "uihk",
-                "ObservabilityAPI"
-            );
+        if (self::$instance === null) {
+            self::$instance = $DIC['component.repository']->getPluginByName("ObservabilityAPI"); //modifier hier pas encore testé (mais normalement ça marche pas)
         }
 
         return self::$instance;
