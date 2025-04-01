@@ -30,7 +30,9 @@ class ilObservabilityAPIPlugin extends ilPlugin
 
     public function addToMenu(): void
     {
-        global $ilMainMenu;
+        global $DIC;
+
+        $ilMainMenu = $DIC->globalScreen()->collector()->mainmenu();
 
         if (!isset($ilMainMenu)) {
             throw new Exception("Impossible d'accéder au menu principal.");
