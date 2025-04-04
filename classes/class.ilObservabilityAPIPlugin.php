@@ -40,7 +40,7 @@ public function addToMenu(): void
 
     $factory = new MainMenuItemFactory();
 
-    if (!$DIC->globalScreen()->mainmenu()) {
+    if (!$DIC->globalScreen()->collector()->mainmenu()) {
         throw new Exception("Impossible d'accéder au menu principal.");
     }
 
@@ -55,8 +55,7 @@ public function addToMenu(): void
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
     // Ajout des éléments au menu
-    $DIC->globalScreen()->mainmenu()->add($health_item);
-    $DIC->globalScreen()->mainmenu()->add($info_item);
+    $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
 }
 
 
