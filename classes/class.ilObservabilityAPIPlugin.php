@@ -1,7 +1,7 @@
 <?php
 use ILIAS\GlobalScreen\Identification\Identifier;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\MainMenuItemFactory;
-use ILIAS\GlobalScreen\Scope\MainMenu\Factory\isTopItem;
+use ILIAS\GlobalScreen\Scope\MainMenu\Factory\TopItem\TopLinkItem;
 use Exception;
 
 
@@ -33,32 +33,32 @@ class ilObservabilityAPIPlugin extends ilPlugin
         return "http://127.0.0.1:8000"; // Modifie si l'API est sur une autre IP
     }
 
-    public function addToMenu(): void
-    {
-        global $DIC;
 
-        $factory = new MainMenuItemFactory();
+public function addToMenu(): void
+{
+    global $DIC;
 
-        if (!$DIC->globalScreen()->collector()->mainmenu()) {
-            throw new Exception("Impossible d'accéder au menu principal.");
-        }
+    $factory = new MainMenuItemFactory();
 
-        // Création de l'item pour Health Status
-        $health_item = $factory->topItem(Identifier::ILIAS("observability_health"))
-            ->withTitle("Observabilité - Health")
-            ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus")
-            ->withSymbol("settings");
-
-        // Création de l'item pour Info Status
-        $info_item = $factory->topItem(Identifier::ILIAS("observability_info"))
-            ->withTitle("Observabilité - Info")
-            ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus")
-            ->withSymbol("info");
-
-        // Ajout des éléments au menu
-        $DIC->globalScreen()->mainmenu()->add($health_item);
-        $DIC->globalScreen()->mainmenu()->add($info_item);
+    if (!$DIC->globalScreen()->mainmenu()) {
+        throw new Exception("Impossible d'accéder au menu principal.");
     }
+
+    // Création de l'item "Observabilité - Health"
+    $health_item = $factory->topLinkItem(Identifier::ILIAS("observability_health"))
+        ->withTitle("Observabilité - Health")
+        ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
+
+    // Création de l'item "Observabilité - Info"
+    $info_item = $factory->topLinkItem(Identifier::ILIAS("observability_info"))
+        ->withTitle("Observabilité - Info")
+        ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
+
+    // Ajout des éléments au menu
+    $DIC->globalScreen()->mainmenu()->add($health_item);
+    $DIC->globalScreen()->mainmenu()->add($info_item);
+}
+
 
 
     /**
