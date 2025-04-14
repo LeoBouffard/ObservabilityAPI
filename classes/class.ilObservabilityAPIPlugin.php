@@ -1,5 +1,5 @@
 <?php
-use ILIAS\GlobalScreen\Identification\IdentificationInterface;
+use ILIAS\GlobalScreen\Identification\PluginIdentification;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\MainMenuItemFactory;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\TopItem\TopLinkItem;
 use Exception;
@@ -45,12 +45,12 @@ public function addToMenu(): void
     }
 
     // Création de l'item "Observabilité - Health"
-    $health_item = $factory->topLinkItem(IdentificationInterface::ILIAS("observability_health"))
+    $health_item = $factory->topLinkItem(PluginIdentification::getPluginId())
         ->withTitle("Observabilité - Health")
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
 
     // Création de l'item "Observabilité - Info"
-    $info_item = $factory->topLinkItem(IdentificationInterface::ILIAS("observability_info"))
+    $info_item = $factory->topLinkItem(PluginIdentification::getPluginId())
         ->withTitle("Observabilité - Info")
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
