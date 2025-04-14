@@ -40,17 +40,32 @@ public function addToMenu(): void
 
     $factory = new MainMenuItemFactory();
 
+    $identification_factory = $DIC->globalScreen()->identification();
+
     if (!$DIC->globalScreen()->collector()->mainmenu()) {
         throw new Exception("Impossible d'accéder au menu principal.");
     }
 
+    $plugin_health_id = $identification_factory->plugin(
+        $this->getPluginObject()->getPluginSlotName(),
+        $this->getPluginObject()->getPluginName(),
+        "observability_health"
+    );
+    
+    $plugin_info_id = $identification_factory->plugin(
+        $this->getPluginObject()->getPluginSlotName(),
+        $this->getPluginObject()->getPluginName(),
+        "observability_info"
+    );
+    
+
     // Création de l'item "Observabilité - Health"
-    $health_item = $factory->topLinkItem($DIC->globalScreen()->identification())
+    $health_item = $factory->topLinkItem($plugin_health_id)
         ->withTitle("Observabilité - Health")
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
 
     // Création de l'item "Observabilité - Info"
-    $info_item = $factory->topLinkItem($DIC->globalScreen()->identification())
+    $info_item = $factory->topLinkItem($plugin_info_id)
         ->withTitle("Observabilité - Info")
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
