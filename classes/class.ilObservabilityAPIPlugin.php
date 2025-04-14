@@ -45,12 +45,12 @@ public function addToMenu(): void
     }
 
     // Création de l'item "Observabilité - Health"
-    $health_item = $factory->topLinkItem(PluginIdentification::getPluginId())
+    $health_item = $factory->topLinkItem($DIC->globalScreen()->identification())
         ->withTitle("Observabilité - Health")
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
 
     // Création de l'item "Observabilité - Info"
-    $info_item = $factory->topLinkItem(PluginIdentification::getPluginId())
+    $info_item = $factory->topLinkItem($DIC->globalScreen()->identification())
         ->withTitle("Observabilité - Info")
         ->withActionUrl("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
