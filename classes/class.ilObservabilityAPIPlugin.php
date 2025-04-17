@@ -48,13 +48,13 @@ public function addToMenu(): void
 
     $plugin_health_id = $identification_factory->plugin(
         "uihk",
-        $this->getPluginName(),
+        $this,
         "observability_health"
     );
     
     $plugin_info_id = $identification_factory->plugin(
         "uihk",
-        $this->getPluginName(),
+        $this,
         "observability_info"
     );
     
