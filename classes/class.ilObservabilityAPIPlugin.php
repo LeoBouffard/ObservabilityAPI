@@ -47,14 +47,14 @@ public function addToMenu(): void
     }
 
     $plugin_health_id = $identification_factory->plugin(
-        $this->getPluginObject()->getPluginSlotName(),
-        $this->getPluginObject()->getPluginName(),
+        "uihk",
+        $this->getPluginName(),
         "observability_health"
     );
     
     $plugin_info_id = $identification_factory->plugin(
-        $this->getPluginObject()->getPluginSlotName(),
-        $this->getPluginObject()->getPluginName(),
+        "uihk",
+        $this->getPluginName(),
         "observability_info"
     );
     
