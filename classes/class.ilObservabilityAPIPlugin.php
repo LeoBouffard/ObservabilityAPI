@@ -79,8 +79,8 @@ public function addToMenu(): void
         ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
     // Ajout des éléments au menu
-    $factory->map->add($health_item);
-    $factory->map->add($info_item);
+    // $factory->map->add($health_item);
+    // $factory->map->add($info_item);
     $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
 }
 
