@@ -69,18 +69,18 @@ public function addToMenu(): void
     
 
     // Création de l'item "Observabilité - Health"
-    $health_item = $DIC->globalScreen()->collector()->mainmenu()->topLinkItem($plugin_health_id)
+    $health_item = $factory->topLinkItem($plugin_health_id)
         ->withTitle("Observabilité - Health")
         ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
 
     // Création de l'item "Observabilité - Info"
-    $info_item = $DIC->globalScreen()->collector()->mainmenu()->topLinkItem($plugin_info_id)
+    $info_item = $factory->topLinkItem($plugin_info_id)
         ->withTitle("Observabilité - Info")
         ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
     // Ajout des éléments au menu
-    $DIC->globalScreen()->collector()->mainmenu()->map->add($health_item);
-    $DIC->globalScreen()->collector()->mainmenu()->map->add($info_item);
+    $factory->map->add($health_item);
+    $factory->map->add($info_item);
     $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
 }
 
