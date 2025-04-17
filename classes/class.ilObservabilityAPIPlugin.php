@@ -50,6 +50,8 @@ public function addToMenu(): void
 
     $factory = new MainMenuItemFactory();
 
+    $DIC->globalScreen()->mainMenu();
+
     $identification_factory = $DIC->globalScreen()->identification();
 
     if (!$DIC->globalScreen()->collector()->mainmenu()) {
@@ -78,6 +80,8 @@ public function addToMenu(): void
         ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
 
     // Ajout des éléments au menu
+    $factory->map->add($health_item);
+    $factory->map->add($info_item);
     $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
 }
 
