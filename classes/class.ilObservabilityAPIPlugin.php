@@ -2,12 +2,13 @@
 use ILIAS\GlobalScreen\Identification\PluginIdentification;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\MainMenuItemFactory;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\TopItem\TopLinkItem;
+use ILIAS\GlobalScreen\Provider\Provider;
 use Exception;
 
 
 include_once("./Services/Component/classes/class.ilPlugin.php");
 
-class ilObservabilityAPIPlugin extends ilPlugin
+class ilObservabilityAPIPlugin extends ilPlugin implements Provider
 {
     private static $instance = null;
 
@@ -22,6 +23,15 @@ class ilObservabilityAPIPlugin extends ilPlugin
         return self::$instance;
     }
 
+    public function getProviderNameForPresentation(): string
+    {
+        return $this->getPluginName();
+    }
+
+    public function getFullyQualifiedClassName(): string
+    {
+        return $this->getPluginName();
+    }
 
     function getPluginName(): string
     {
