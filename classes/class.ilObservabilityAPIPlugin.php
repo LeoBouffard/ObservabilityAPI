@@ -59,12 +59,12 @@ public function addToMenu(): void
     $plugin_health_id = $identification_factory->plugin(
         "uihk",
         $this,
-    )->get();
+    )->identifier("plugin_health");
     
     $plugin_info_id = $identification_factory->plugin(
         "uihk",
         $this,
-    )->get();
+    )->identifier("plugin_info");
     
 
     // Création de l'item "Observabilité - Health"
