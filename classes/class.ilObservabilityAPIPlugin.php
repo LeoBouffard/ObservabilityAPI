@@ -97,8 +97,11 @@ class ilObservabilityAPIPlugin extends ilPlugin implements Provider
         // echo "Menu ajouté avec succès.";
         var_dump(value: $DIC->globalScreen()->collector()->mainmenu()) ;
         $DIC->globalScreen()->collector()->mainmenu()->collectStructure();
+        $DIC->globalScreen()->collector()->mainmenu()->filterItemsByVisibilty();
         $DIC->globalScreen()->collector()->mainmenu()->prepareItemsForUIRepresentation();
-        $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
+        $DIC->globalScreen()->collector()->mainmenu()->cleanupItemsForUIRepresentation();
+        $DIC->globalScreen()->collector()->mainmenu()->sortItemsForUIRepresentation();
+
     }
 
 
