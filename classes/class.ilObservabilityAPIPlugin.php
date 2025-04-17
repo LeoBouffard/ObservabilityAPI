@@ -4,7 +4,19 @@ use ILIAS\GlobalScreen\Scope\MainMenu\Factory\MainMenuItemFactory;
 use ILIAS\GlobalScreen\Scope\MainMenu\Factory\TopItem\TopLinkItem;
 use ILIAS\GlobalScreen\Provider\Provider;
 use Exception;
+use ReflectionClass;
 
+/**
+* @param \ILIAS\GlobalScreen\Scope\MainMenu\Collector\MainMenuMainCollector $main_menu
+* @return \ILIAS\GlobalScreen\Scope\MainMenu\Collector\Map\Map
+ */
+function getMapFromMainMenu($main_menu): \ILIAS\GlobalScreen\Scope\MainMenu\Collector\Map\Map
+{
+    $reflection = new ReflectionClass($main_menu);
+    $property = $reflection->getProperty('map');
+    $property->setAccessible(true);
+    return $property->getValue($main_menu);
+}
 
 include_once("./Services/Component/classes/class.ilPlugin.php");
 
@@ -44,45 +56,46 @@ class ilObservabilityAPIPlugin extends ilPlugin implements Provider
     }
 
 
-public function addToMenu(): void
-{
-    global $DIC;
+    public function addToMenu(): void
+    {
+        global $DIC;
 
-    $factory = new MainMenuItemFactory();
+        $factory = new MainMenuItemFactory();
 
 
-    $identification_factory = $DIC->globalScreen()->identification();
+        $identification_factory = $DIC->globalScreen()->identification();
 
-    if (!$DIC->globalScreen()->collector()->mainmenu()) {
-        throw new Exception("Impossible d'accéder au menu principal.");
+        if (!$DIC->globalScreen()->collector()->mainmenu()) {
+            throw new Exception("Impossible d'accéder au menu principal.");
+        }
+
+        $plugin_health_id = $identification_factory->plugin(
+            "uihk",
+            $this,
+        )->identifier("plugin_health");
+        
+        $plugin_info_id = $identification_factory->plugin(
+            "uihk",
+            $this,
+        )->identifier("plugin_info");
+        
+
+        // Création de l'item "Observabilité - Health"
+        $health_item = $factory->topLinkItem($plugin_health_id)
+            ->withTitle("Observabilité - Health")
+            ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
+
+        // Création de l'item "Observabilité - Info"
+        $info_item = $factory->topLinkItem($plugin_info_id)
+            ->withTitle("Observabilité - Info")
+            ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
+
+        $map = getMapFromMainMenu($DIC->globalScreen()->collector()->mainmenu()); // on récupère le map privé
+        // Ajout des éléments au menu
+        $map->add($health_item);
+        $map->add($info_item);
+        // $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
     }
-
-    $plugin_health_id = $identification_factory->plugin(
-        "uihk",
-        $this,
-    )->identifier("plugin_health");
-    
-    $plugin_info_id = $identification_factory->plugin(
-        "uihk",
-        $this,
-    )->identifier("plugin_info");
-    
-
-    // Création de l'item "Observabilité - Health"
-    $health_item = $factory->topLinkItem($plugin_health_id)
-        ->withTitle("Observabilité - Health")
-        ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showHealthStatus");
-
-    // Création de l'item "Observabilité - Info"
-    $info_item = $factory->topLinkItem($plugin_info_id)
-        ->withTitle("Observabilité - Info")
-        ->withAction("./ilias.php?baseClass=ilObservabilityAPIGUI&cmd=showInfoStatus");
-
-    // Ajout des éléments au menu
-    $DIC->globalScreen()->collector()->mainmenu()->map->add($health_item);
-    $DIC->globalScreen()->collector()->mainmenu()->map->add($info_item);
-    $DIC->globalScreen()->collector()->mainmenu()->getItemsForUIRepresentation();
-}
 
 
 
