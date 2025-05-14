@@ -100,7 +100,6 @@ class ilObservabilityAPIPlugin extends ilPlugin implements Provider
         $DIC->globalScreen()->collector()->mainmenu()->prepareItemsForUIRepresentation();
         $DIC->globalScreen()->collector()->mainmenu()->cleanupItemsForUIRepresentation();
         $DIC->globalScreen()->collector()->mainmenu()->sortItemsForUIRepresentation();
-
     }
 
 
