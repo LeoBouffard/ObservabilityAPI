@@ -95,6 +95,8 @@ class ilObservabilityAPIPlugin extends ilPlugin implements Provider
         $map->add($health_item);
         $map->add($info_item);
         // echo "Menu ajouté avec succès.";
+        var_dump($map);
+        var_dump($DIC->globalScreen()->collector()->mainmenu());
         $DIC->globalScreen()->collector()->mainmenu()->collectStructure();
         $DIC->globalScreen()->collector()->mainmenu()->filterItemsByVisibilty();
         $DIC->globalScreen()->collector()->mainmenu()->prepareItemsForUIRepresentation();
