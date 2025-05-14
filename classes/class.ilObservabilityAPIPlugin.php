@@ -87,6 +87,7 @@ class ilObservabilityAPIPlugin extends ilPlugin implements Provider
         /** @var StandardManager $main_bar */
         $main_bar = $DIC->maincontrols()->mainbar();
         if ($main_bar) {
+            echo "Main bar found, adding items.";
             $main_bar->add($health_item);
             $main_bar->add($info_item);
         }
