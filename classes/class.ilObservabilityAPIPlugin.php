@@ -100,6 +100,11 @@ class ilObservabilityAPIPlugin extends ilPlugin implements Provider
         $DIC->globalScreen()->collector()->mainmenu()->sortItemsForUIRepresentation();
     }
 
+    public function getUIPluginRouterClass()
+    {
+        return ilObservabilityAPIRouterGUI::class;
+    }
+
     /**
      * Ne plus appeler manuellement addToMenu ici
      */
