@@ -2,11 +2,11 @@
 require_once("./Services/Repository/classes/class.ilRepositoryObjectPlugin.php");
 
 class ilObservabilityPlugin extends ilRepositoryObjectPlugin {
-    function getPluginName() {
+    function getPluginName(): string {
         return "Observability";
     }
 
-    protected function uninstallCustom() {
+    protected function uninstallCustom(): void {
         // Optional cleanup
     }
 }

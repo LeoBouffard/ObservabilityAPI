@@ -1,7 +1,8 @@
 <?php
 class ilObjObservabilityAccess extends ilObjectPluginAccess {
 
-    static function _checkAccess($cmd, $permission, $ref_id, $obj_id, $user_id = null) {
+    public static function _checkAccess(string $cmd, string $permission, int $ref_id, int $obj_id, ?int $user_id = null): bool {
         return true;
     }
+
 }

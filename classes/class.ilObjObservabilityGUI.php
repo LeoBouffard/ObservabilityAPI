@@ -3,25 +3,25 @@ require_once("./Services/Object/classes/class.ilObjectPluginGUI.php");
 
 class ilObjObservabilityGUI extends ilObjectPluginGUI {
 
-    function getType() {
+    function getType(): string {
         return "xobs";
     }
 
-    protected function afterSave(ilObject $new_object) {
+    protected function afterSave(ilObject $new_object): void {
         global $ilCtrl;
         $ilCtrl->setParameter($this, "ref_id", $this->ref_id);
         $ilCtrl->redirect($this, "pageOne");
     }
 
-    public function getStandardCmd() {
+    public function getStandardCmd(): string {
         return "pageOne";
     }
 
-    public function getAfterCreationCmd() {
+    public function getAfterCreationCmd(): string {
         return "pageOne";
     }
 
-    protected function setTabs() {
+    protected function setTabs(): void {
         global $ilTabs;
         $this->addInfoTab();
         $this->addPermissionTab();
@@ -30,7 +30,7 @@ class ilObjObservabilityGUI extends ilObjectPluginGUI {
         $ilTabs->addTab("pageTwo", "Page Two", $this->ctrl->getLinkTarget($this, "pageTwo"));
     }
 
-    public function performCommand($cmd) {
+    public function performCommand($cmd): void {
         switch ($cmd) {
             case "pageOne":
             case "pageTwo":

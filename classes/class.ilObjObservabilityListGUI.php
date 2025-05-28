@@ -3,15 +3,15 @@ require_once("./Services/Repository/classes/class.ilObjectPluginListGUI.php");
 
 class ilObjObservabilityListGUI extends ilObjectPluginListGUI {
 
-    function initType() {
+    function initType(): void {
         $this->setType("xobs");
     }
 
-    function getGuiClass() {
+    function getGuiClass(): string {
         return "ilObjObservabilityGUI";
     }
 
-    protected function initCommands() {
+    public function initCommands(): array {
         return [
             [
                 "permission" => "read",
