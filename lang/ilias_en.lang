@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+    <language key="en" version="1.0">
+        <module key="rep_robj_xobs">
+            <label key="obj_xobs" value="Observability"/>
+            <label key="obj_xobs_desc" value="A plugin that fetches and shows JSON data from APIs"/>
+        </module>
+    </language>
+</languages>
