@@ -1,7 +1,7 @@
 <?php
 // require_once("./Services/Object/classes/class.ilObject2.php");
 
-class ilObjObservability extends ilObjectPlugin {
+class ilObjObservabilityAPI extends ilObjectPlugin {
 
     protected function initType(): void {
         $this->setType("xobs");
