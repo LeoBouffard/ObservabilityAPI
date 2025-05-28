@@ -8,7 +8,7 @@ class ilObjObservabilityAPIListGUI extends ilObjectPluginListGUI {
     }
 
     function getGuiClass(): string {
-        return "ilObjObservabilityGUI";
+        return "ilObjObservabilityAPIGUI";
     }
 
     public function initCommands(): array {
