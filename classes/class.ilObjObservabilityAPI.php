@@ -1,5 +1,5 @@
 <?php
-require_once("./Services/Object/classes/class.ilObject2.php");
+// require_once("./Services/Object/classes/class.ilObject2.php");
 
 class ilObjObservability extends ilObjectPlugin {
 

@@ -1,5 +1,5 @@
 <?php
-require_once("./Services/Object/classes/class.ilObjectPluginGUI.php");
+// require_once("./Services/Object/classes/class.ilObjectPluginGUI.php");
 
 class ilObjObservabilityGUI extends ilObjectPluginGUI {
 
