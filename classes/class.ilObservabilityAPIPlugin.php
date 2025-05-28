@@ -1,7 +1,7 @@
 <?php
 // require_once("./Services/Repository/classes/class.ilRepositoryObjectPlugin.php");
 
-class ilObservabilityPlugin extends ilRepositoryObjectPlugin {
+class ilObservabilityAPIPlugin extends ilRepositoryObjectPlugin {
     function getPluginName(): string {
         return "Observability";
     }

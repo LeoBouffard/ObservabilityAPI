@@ -1,7 +1,7 @@
 <?php
 // require_once("./Services/Object/classes/class.ilObjectPluginGUI.php");
 
-class ilObjObservabilityGUI extends ilObjectPluginGUI {
+class ilObjObservabilityAPIGUI extends ilObjectPluginGUI {
 
     function getType(): string {
         return "xobs";

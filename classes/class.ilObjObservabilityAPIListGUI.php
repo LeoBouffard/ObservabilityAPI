@@ -1,7 +1,7 @@
 <?php
 // require_once("./Services/Repository/classes/class.ilObjectPluginListGUI.php");
 
-class ilObjObservabilityListGUI extends ilObjectPluginListGUI {
+class ilObjObservabilityAPIListGUI extends ilObjectPluginListGUI {
 
     function initType(): void {
         $this->setType("xobs");
