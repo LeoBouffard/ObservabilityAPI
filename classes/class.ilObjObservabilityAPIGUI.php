@@ -42,7 +42,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI {
     protected function pageOne() {
         global $tpl;
 
-        $json = @file_get_contents("https://example.com/api/one.json");
+        $json = @file_get_contents("http://127.0.0.1:8000/info");
         $data = json_decode($json, true);
         $html = "<h2>Données Page One</h2><pre>" . print_r($data, true) . "</pre>";
 
@@ -52,7 +52,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI {
     protected function pageTwo() {
         global $tpl;
 
-        $json = @file_get_contents("https://example.com/api/two.json");
+        $json = @file_get_contents("http://127.0.0.1:8000/health");
         $data = json_decode($json, true);
         $html = "<h2>Données Page Two</h2><pre>" . print_r($data, true) . "</pre>";
 
