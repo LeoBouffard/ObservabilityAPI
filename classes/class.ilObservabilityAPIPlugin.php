@@ -3,7 +3,7 @@
 
 class ilObservabilityAPIPlugin extends ilRepositoryObjectPlugin {
     function getPluginName(): string {
-        return "Observability";
+        return "ObservabilityAPI";
     }
 
     protected function uninstallCustom(): void {
