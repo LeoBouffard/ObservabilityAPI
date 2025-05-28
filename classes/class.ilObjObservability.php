@@ -15,9 +15,7 @@ class ilObjObservability extends ilObjectPlugin {
 
     public function doUpdate(): void {}
 
-    public function doDelete(): void {
-        return true;
-    }
+    public function doDelete(): void {}
 
     public function doCloneObject(ilObject2 $new_obj, int $a_target_id, ?int $a_copy_id = null): void{}
 }
