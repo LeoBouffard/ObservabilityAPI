@@ -1,9 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<languages>
-    <language key="en" version="1.0">
-        <module key="rep_robj_xobs">
-            <label key="obj_xobs" value="Observability"/>
-            <label key="obj_xobs_desc" value="A plugin that fetches and shows JSON data from APIs"/>
-        </module>
-    </language>
-</languages>
+<!-- language file start -->
+obj_xobs#:#ObservabilityAPI
+objs_xobs#:#ObservabilityAPI
+obj_xobs_duplicate#:#Copy
+objs_xobs_duplicate#:#Copy ObservabilityAPI
+obj_xobs_select#:#Select ObservabilityAPI
+xobs_add#:#Add ObservabilityAPI
+xobs_new#:#Add New ObservabilityAPI
+xobs_read#:#Read access to ObservabilityAPI
+xobs_write#:#Edit ObservabilityAPI
+xobs_delete#:#Delete ObservabilityAPI
+xobs_visible#:#ObservabilityAPI is visible
+xobs_read_learning_progress#:#Read learning progress
+xobs_edit_learning_progress#:#Edit learning progress
+crs_create_xobs#:#Create ObservabilityAPI
+grp_create_xobs#:#Create ObservabilityAPI
+fold_create_xobs#:#Create ObservabilityAPI
+root_create_xobs#:#Create ObservabilityAPI
+cat_create_xobs#:#Create ObservabilityAPI
+metrics_api_url#:#Metrics API URL
+status_api_url#:#Status API URL (optional)
+metrics_api_url_info#:#URL of the API returning observability metrics in JSON format
+status_api_url_info#:#URL of the API returning system status in JSON format
+edit_settings#:#Edit Settings
+observability_metrics#:#Observability Metrics
+system_status#:#System Status
+no_data_available#:#No data available
+api_error#:#Error fetching API data
+refresh_data#:#Refresh Data
