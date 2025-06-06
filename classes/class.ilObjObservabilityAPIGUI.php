@@ -36,6 +36,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
     }
 
     public function getStandardCmd(): string {
+        echo "getStandardCmd() is deprecated, use getStartCmd() instead.";
         return "pageOne";
     }
 
