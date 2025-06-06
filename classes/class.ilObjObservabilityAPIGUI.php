@@ -1,4 +1,29 @@
 <?php
+
+/**
+ * This class handles the creation of a H5P repository object.
+ * For this plugin, this class also serves as the entry-point
+ * of all 'repository' controllers.
+ *
+ * When implementing a new controller which should be reachable by any
+ * other repository controller, this class must be extended with an
+ * according @ilCtrl_Calls statement. If the controller should also be
+ * reachable from the administration, do the same in
+ *
+ * NOTE that commands routing via this class MUST NEVER be
+ * named 'save', otherwise the parent class will invoke its
+ * own save method since executeCommand is not overwritten.
+ *
+ * @ilCtrl_isCalledBy ilObjObservabilityAPIGUI: ilAdministrationGUI
+ * @ilCtrl_isCalledBy ilObjObservabilityAPIGUI: ilRepositoryGUI
+ *
+ * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilPermissionGUI
+ * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilInfoScreenGUI
+ * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilObjectCopyGUI
+ *
+ * @author            Thibeau Fuhrer <thibeau@sr.solutions>
+ * @noinspection      AutoloadingIssuesInspection
+ */
 class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 {
     public function __construct($a_data = null, int $a_id = 0, bool $a_call_by_reference = true)
