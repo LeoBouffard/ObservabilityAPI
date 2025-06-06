@@ -41,12 +41,15 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
     }
 
     public function getAfterCreationCmd(): string {
+        echo "getAfterCreationCmd() is deprecated, use getStartCmd() instead.";
         return "pageOne";
     }
 
     public function performCommand($cmd): void {
         switch ($cmd) {
             case "pageOne":
+                $this->view();
+                break;
             case "pageTwo":
                 $this->$cmd();
                 break;
