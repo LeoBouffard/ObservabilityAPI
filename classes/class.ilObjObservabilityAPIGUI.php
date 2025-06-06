@@ -46,13 +46,13 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
     }
 
     public function performCommand($cmd): void {
-        switch ($cmd) {
-            case "pageOne":
-                $this->view();
-                break;
-            case "pageTwo":
-                $this->$cmd();
-                break;
+        $next_class = $this->ctrl->getNextClass();
+
+        // this is a workaround for https://mantis.ilias.de/view.php?id=37531,
+        // until https://github.com/ILIAS-eLearning/ILIAS/pull/6060 is merged.
+        if (empty($next_class) && 'create' === $cmd) {
+            $this->$cmd();
+            return;
         }
     }
     
