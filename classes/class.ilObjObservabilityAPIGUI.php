@@ -26,6 +26,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
     public function __construct(int $a_ref_id = 0, int $a_id_type = self::REPOSITORY_NODE_ID, int $a_parent_node_id = 0)
     {
+        $this->object = new ilObjObservabilityAPI($this->object->getId());
         parent::__construct($a_ref_id, $a_id_type, $a_parent_node_id);
     }
 
