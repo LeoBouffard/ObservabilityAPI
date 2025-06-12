@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $ilDB ilDBInterface
+ */
+
 $fields = array(
     'obj_id' => array(
         'type' => 'integer',
