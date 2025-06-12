@@ -16,23 +16,23 @@ error_reporting(E_ALL);
  * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilPermissionGUI
  * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilInfoScreenGUI
  * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilObjectCopyGUI
- *
- * @author Thibeau Fuhrer <thibeau@sr.solutions>
- * @noinspection AutoloadingIssuesInspection
  */
 class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 {
+    public const CMD_VIEW = 'view';
+    public const CMD_EDIT = 'edit';
+    public const CMD_UPDATE = 'update';
+    public const CMD_REFRESH = 'refresh';
     public const CMD_EDIT_PERMISSIONS = 'perm';
 
     public function __construct(int $a_ref_id = 0, int $a_id_type = self::REPOSITORY_NODE_ID, int $a_parent_node_id = 0)
     {
-        $this->object = new ilObjObservabilityAPI();
         parent::__construct($a_ref_id, $a_id_type, $a_parent_node_id);
     }
 
     public static function getStartCmd(): string
     {
-        return 'view';
+        return self::CMD_VIEW;
     }
 
     public final function getType(): string
@@ -42,29 +42,42 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
     public function executeCommand(): void
     {
-        $next_class = $this->ctrl->getNextClass();
+        $next_class = strtolower($this->ctrl->getNextClass());
+        $cmd = $this->ctrl->getCmd(self::getStartCmd());
 
-        // redirect commands
-        switch (strtolower($next_class)) {
+        switch ($next_class) {
+            case strtolower(ilInfoScreenGUI::class):
+                $this->ctrl->forwardCommand(new ilInfoScreenGUI($this));
+                return;
+
+            case strtolower(ilPermissionGUI::class):
+                $this->ctrl->forwardCommand(new ilPermissionGUI($this));
+                return;
+
+            case strtolower(ilObjectCopyGUI::class):
+                $this->ctrl->forwardCommand(new ilObjectCopyGUI($this));
+                return;
+
             default:
-                $cmd = $this->ctrl->getCmd(self::getStartCmd());
+                // Liste blanche des commandes autorisées
+                $allowed_cmds = [
+                    self::CMD_VIEW,
+                    self::CMD_EDIT,
+                    self::CMD_UPDATE,
+                    self::CMD_REFRESH,
+                ];
 
-                if (in_array($cmd, ['view', 'edit', 'update', 'refresh'], true)) {
+                if (in_array($cmd, $allowed_cmds, true)) {
                     $this->performCommand($cmd);
+                } else {
+                    parent::executeCommand();
                 }
-                break;
         }
     }
 
+
     public function performCommand(string $cmd): void
     {
-        $next_class = $this->ctrl->getNextClass();
-
-        if (empty($next_class) && $cmd === 'create') {
-            $this->$cmd();
-            return;
-        }
-
         if (method_exists($this, $cmd)) {
             $this->$cmd();
         }
@@ -112,7 +125,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $toolbar->addComponent(
                 $DIC->ui()->factory()->button()->standard(
                     $this->plugin->txt("refresh_data"),
-                    $this->ctrl->getLinkTarget($this, "refresh")
+                    $this->ctrl->getLinkTarget($this, self::CMD_REFRESH)
                 )
             );
         }
@@ -141,7 +154,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $this->object->update();
             $this->object->refreshCache();
 
-            $DIC->ctrl()->redirect($this, "view");
+            $DIC->ctrl()->redirect($this, self::CMD_VIEW);
         } else {
             $form->setValuesByPost();
             $DIC->ui()->mainTemplate()->setContent($form->getHTML());
@@ -151,7 +164,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
     public function refresh(): void
     {
         $this->object->refreshCache();
-        $this->ctrl->redirect($this, "view");
+        $this->ctrl->redirect($this, self::CMD_VIEW);
     }
 
     protected function initEditForm(): ilPropertyFormGUI
@@ -173,7 +186,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         $url2->setInfo($this->plugin->txt("status_api_url_info"));
         $form->addItem($url2);
 
-        $form->addCommandButton("update", $DIC->language()->txt("save"));
+        $form->addCommandButton(self::CMD_UPDATE, $DIC->language()->txt("save"));
 
         return $form;
     }
@@ -183,11 +196,11 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         global $DIC;
 
         $DIC->tabs()->addTab("view", $DIC->language()->txt("view"),
-            $this->ctrl->getLinkTarget($this, "view"));
+            $this->ctrl->getLinkTarget($this, self::CMD_VIEW));
 
         if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
             $DIC->tabs()->addTab("settings", $DIC->language()->txt("settings"),
-                $this->ctrl->getLinkTarget($this, "edit"));
+                $this->ctrl->getLinkTarget($this, self::CMD_EDIT));
         }
     }
 
