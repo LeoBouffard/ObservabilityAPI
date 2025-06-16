@@ -1,7 +1,5 @@
 <?php
 
-require_once('./Services/Object/classes/class.ilObjectPluginListGUI.php');
-
 /**
  * List GUI class for ObservabilityAPI repository objects
  */
