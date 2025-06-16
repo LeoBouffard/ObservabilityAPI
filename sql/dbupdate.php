@@ -1,3 +1,4 @@
+<#1>
 <?php
 /**
  * @var $ilDB ilDBInterface
@@ -20,6 +21,10 @@ $fields = array(
         'notnull' => false
     )
 );
-$ilDB->createTable("rep_robj_xobs_data", $fields);
-$ilDB->addPrimaryKey("rep_robj_xobs_data", array("obj_id"));
+
+if (!$ilDB->tableExists('rep_robj_xobs_data')) {
+    $ilDB->createTable("rep_robj_xobs_data", $fields);
+    $ilDB->addPrimaryKey("rep_robj_xobs_data", array("obj_id"));
+
+}
 ?>
