@@ -98,6 +98,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         if ($this->object instanceof ilObjObservabilityAPI) {
             $data2 = $this->object->fetchApiData2();
         }
+        var_dump(get_class($this->object));
 
         var_dump($data1);
         echo "<br>";
