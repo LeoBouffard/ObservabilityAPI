@@ -85,6 +85,9 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
     public function view(): void
     {
+        /**
+         * @var $DIC \ILIAS\DI\Container
+         */
         global $DIC;
 
         $this->setTabs();
@@ -98,7 +101,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         if ($this->object instanceof ilObjObservabilityAPI) {
             $data2 = $this->object->fetchApiData2();
         }
-
+        
         $tpl->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
         $tpl->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
         $tpl->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("no_data_available"));
@@ -125,7 +128,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         }
 
         if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
-            echo $this->plugin->txt("edit_settings");
             $toolbar = $DIC->toolbar();
             $toolbar->addComponent(
                 $DIC->ui()->factory()->button()->standard(
