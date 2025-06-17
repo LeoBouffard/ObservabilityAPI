@@ -99,6 +99,8 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $data2 = $this->object->fetchApiData2();
         }
         var_dump(get_class($this->object));
+        echo file_get_contents("http://127.0.0.1:8000/info");
+
 
         var_dump($data1);
         echo "<br>";
