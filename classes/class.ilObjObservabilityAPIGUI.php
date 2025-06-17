@@ -91,10 +91,12 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         $this->tabs_gui->activateTab('view');
 
         $tpl = new ilTemplate('tpl.content.html', true, true, $this->plugin->getDirectory());
-        var_dump($tpl);
         $data1 = $this->object->fetchApiData1();
         $data2 = $this->object->fetchApiData2();
-        var_dump($data1, $data2);
+        var_dump($data1);
+        echo "<br>";
+        echo "<br>";
+        var_dump($data2);
 
         $tpl->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
         $tpl->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
