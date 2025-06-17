@@ -28,8 +28,8 @@ class ilObjObservabilityAPI extends ilObjectPlugin
         $DIC->database()->manipulate(
             "INSERT INTO rep_robj_xobs_data (obj_id, api_url_1, api_url_2) VALUES (" .
             $DIC->database()->quote($this->getId(), 'integer') . "," .
-            $DIC->database()->quote('', 'text') . "," .
-            $DIC->database()->quote('', 'text') . ")"
+            $DIC->database()->quote($this->getApiUrl1(), 'text') . "," .
+            $DIC->database()->quote($this->getApiUrl2(), 'text') . ")"
         );
     }
     
