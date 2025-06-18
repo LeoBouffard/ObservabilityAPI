@@ -129,6 +129,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
             $toolbar = $DIC->toolbar();
+            var_dump($toolbar);
             $toolbar->addComponent(
                 $DIC->ui()->factory()->button()->standard(
                     $this->plugin->txt("refresh_data"),
