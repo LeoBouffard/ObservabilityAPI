@@ -89,9 +89,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
          * @var $DIC \ILIAS\DI\Container
          */
         global $DIC;
-        var_dump($DIC);
-        echo "<br>";
-        echo "<br>";
 
         $this->setTabs();
         $this->tabs_gui->activateTab('view');
