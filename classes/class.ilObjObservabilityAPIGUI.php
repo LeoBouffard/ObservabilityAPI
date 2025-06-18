@@ -129,7 +129,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
             $toolbar = $DIC->toolbar();
-            var_dump($toolbar);
             $toolbar->addComponent(
                 $DIC->ui()->factory()->button()->standard(
                     $this->plugin->txt("refresh_data"),
@@ -138,7 +137,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             );
         }
 
-        // echo($tpl->get());
+        echo($tpl->get());
         $DIC->ui()->mainTemplate()->setContent($tpl->get());
     }
 
@@ -149,6 +148,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         $form = $this->initEditForm();
         global $DIC;
+        echo($form->getHTML());
         $DIC->ui()->mainTemplate()->setContent($form->getHTML());
     }
 
@@ -158,22 +158,27 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         $form = $this->initEditForm();
         if ($form->checkInput()) {
-            $this->object->setApiUrl1($form->getInput("api_url_1"));
-            $this->object->setApiUrl2($form->getInput("api_url_2"));
-            $this->object->update();
-            $this->object->refreshCache();
+            if ($this->object instanceof ilObjObservabilityAPI) {
+                $this->object->setApiUrl1($form->getInput("api_url_1"));
+                $this->object->setApiUrl2($form->getInput("api_url_2"));
+                $this->object->update();
+                $this->object->refreshCache();
 
-            $DIC->ctrl()->redirect($this, self::CMD_VIEW);
+                $DIC->ctrl()->redirect($this, self::CMD_VIEW);
+            }
         } else {
             $form->setValuesByPost();
+            echo $form->getHTML();
             $DIC->ui()->mainTemplate()->setContent($form->getHTML());
         }
     }
 
     public function refresh(): void
     {
-        $this->object->refreshCache();
-        $this->ctrl->redirect($this, self::CMD_VIEW);
+        if ($this->object instanceof ilObjObservabilityAPI) {
+            $this->object->refreshCache();
+            $this->ctrl->redirect($this, self::CMD_VIEW);
+        }
     }
 
     protected function initEditForm(): ilPropertyFormGUI
@@ -185,18 +190,20 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         $form->setTitle($this->plugin->txt("edit_settings"));
 
         $url1 = new ilTextInputGUI($this->plugin->txt("metrics_api_url"), "api_url_1");
-        $url1->setValue($this->object->getApiUrl1());
-        $url1->setRequired(true);
-        $url1->setInfo($this->plugin->txt("metrics_api_url_info"));
-        $form->addItem($url1);
+        if ($this->object instanceof ilObjObservabilityAPI) {
+            $url1->setValue($this->object->getApiUrl1());
+            $url1->setRequired(true);
+            $url1->setInfo($this->plugin->txt("metrics_api_url_info"));
+            $form->addItem($url1);
+        }
 
         $url2 = new ilTextInputGUI($this->plugin->txt("status_api_url"), "api_url_2");
-        $url2->setValue($this->object->getApiUrl2());
-        $url2->setInfo($this->plugin->txt("status_api_url_info"));
-        $form->addItem($url2);
-
+        if ($this->object instanceof ilObjObservabilityAPI) {
+            $url2->setValue($this->object->getApiUrl2());
+            $url2->setInfo($this->plugin->txt("status_api_url_info"));
+            $form->addItem($url2);
+        }
         $form->addCommandButton(self::CMD_UPDATE, $DIC->language()->txt("save"));
-
         return $form;
     }
 
