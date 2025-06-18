@@ -137,7 +137,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             );
         }
 
-        var_dump($tpl->get());
+        echo($tpl->get());
         $DIC->ui()->mainTemplate()->setContent($tpl->get());
     }
 
