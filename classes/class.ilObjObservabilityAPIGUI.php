@@ -32,7 +32,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
     public static function getStartCmd(): string
     {
-        return self::CMD_REFRESH;
+        return self::CMD_EDIT_PERMISSIONS;
     }
 
     public final function getType(): string
