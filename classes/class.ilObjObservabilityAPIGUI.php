@@ -1,38 +1,36 @@
 <?php
 
 declare(strict_types=1);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
+use \ILIAS\UI\Component\Input\Container\Form\Standard;
+
 
 /**
  * This class handles the creation of a Observability repository object.
  * It also serves as the entry point of all repository controllers.
  *
- * @ilCtrl_isCalledBy ilObjObservabilityAPIGUI: ilObjPluginDispatchGUI
- * @ilCtrl_isCalledBy ilObjObservabilityAPIGUI: ilAdministrationGUI
- * @ilCtrl_isCalledBy ilObjObservabilityAPIGUI: ilRepositoryGUI
- *
- * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilPermissionGUI
- * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilInfoScreenGUI
- * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilObjectCopyGUI
+ * @ilCtrl_isCalledBy ilObjWhiteboardGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
+ * @ilCtrl_Calls      ilObjWhiteboardGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilExportGUI
  */
 class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 {
+    protected ilCtrl $ctrl;
+    protected ilTabsGUI $tabs;
+    public ilGlobalTemplateInterface $tpl;
+
+
     public const CMD_VIEW = 'view';
     public const CMD_EDIT = 'edit';
     public const CMD_UPDATE = 'update';
     public const CMD_REFRESH = 'refresh';
     public const CMD_EDIT_PERMISSIONS = 'perm';
 
-    public function __construct(int $a_ref_id = 0, int $a_id_type = self::REPOSITORY_NODE_ID, int $a_parent_node_id = 0)
+    protected function afterConstructor(): void
     {
-        parent::__construct($a_ref_id, $a_id_type, $a_parent_node_id);
-    }
-
-    public static function getStartCmd(): string
-    {
-        return self::CMD_EDIT_PERMISSIONS;
+        global $ilCtrl, $ilTabs, $tpl;
+        $this->ctrl = $ilCtrl;
+        $this->tabs = $ilTabs;
+        $this->tpl = $tpl;
     }
 
     public final function getType(): string
@@ -40,116 +38,133 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         return ilObservabilityAPIPlugin::PLUGIN_ID;
     }
 
-    public function executeCommand(): void
-    {
-        $next_class = strtolower($this->ctrl->getNextClass());
-        $cmd = $this->ctrl->getCmd(self::getStartCmd());
-
-        switch ($next_class) {
-            case strtolower(ilInfoScreenGUI::class):
-                $this->ctrl->forwardCommand(new ilInfoScreenGUI($this));
-                return;
-
-            case strtolower(ilPermissionGUI::class):
-                $this->ctrl->forwardCommand(new ilPermissionGUI($this));
-                return;
-
-            case strtolower(ilObjectCopyGUI::class):
-                $this->ctrl->forwardCommand(new ilObjectCopyGUI($this));
-                return;
-
-            default:
-                // Liste blanche des commandes autorisées
-                $allowed_cmds = [
-                    self::CMD_VIEW,
-                    self::CMD_EDIT,
-                    self::CMD_UPDATE,
-                    self::CMD_REFRESH,
-                ];
-
-                if (in_array($cmd, $allowed_cmds, true)) {
-                    $this->performCommand($cmd);
-                } else {
-                    parent::executeCommand();
-                }
-        }
-    }
-
 
     public function performCommand(string $cmd): void
     {
-        if (method_exists($this, $cmd)) {
-            $this->$cmd();
+        $this->setTitleAndDescription();
+        switch ($cmd) {
+            case "editProperties":
+            case "updateProperties":
+            case "saveProperties":
+                $this->checkPermission("write");
+                $this->$cmd();
+                break;
+            case "showContent":
+            default:
+                $this->checkPermission("read");
+                $this->$cmd();
+                break;
         }
     }
 
-    public function view(): void
+    /**
+     * @inheritDoc
+     */
+    public function getAfterCreationCmd(): string
     {
-        /**
-         * @var $DIC \ILIAS\DI\Container
-         */
-        global $DIC;
+        return "editProperties";
+    }
 
-        $this->setTabs();
-        $this->tabs_gui->activateTab('view');
+    /**
+     * @inheritDoc
+     */
+    public function getStandardCmd(): string
+    {
+        return "showContent";
+    }
 
-        $tpl = new ilTemplate('tpl.content.html', true, true, $this->plugin->getDirectory());
-        
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $data1 = $this->object->fetchApiData1();
-        }
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $data2 = $this->object->fetchApiData2();
-        }
-        
-        $tpl->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
-        $tpl->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
-        $tpl->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("no_data_available"));
+    protected function setTabs(): void
+    {
+        global $ilCtrl, $ilAccess;
 
-        $has_data = false;
-
-        if ($data1) {
-            $tpl->setCurrentBlock("api_data_1");
-            $tpl->setVariable("API_DATA_1", $this->formatObservabilityData($data1, "metrics"));
-            $tpl->parseCurrentBlock();
-            $has_data = true;
-        }
-
-        if ($data2) {
-            $tpl->setCurrentBlock("api_data_2");
-            $tpl->setVariable("API_DATA_2", $this->formatObservabilityData($data2, "status"));
-            $tpl->parseCurrentBlock();
-            $has_data = true;
-        }
-
-        if (!$has_data) {
-            $tpl->setCurrentBlock("no_data");
-            $tpl->parseCurrentBlock();
-        }
-
-        if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
-            $toolbar = $DIC->toolbar();
-            $toolbar->addComponent(
-                $DIC->ui()->factory()->button()->standard(
-                    $this->plugin->txt("refresh_data"),
-                    $this->ctrl->getLinkTarget($this, self::CMD_REFRESH)
-                )
+        if ($ilAccess->checkAccess("read", "", $this->object->getRefId())) {
+            $this->tabs->addTab(
+                "view",
+                $this->txt("view"),
+                $ilCtrl->getLinkTarget($this, "showContent")
             );
         }
 
-        echo($tpl->get());
-        $DIC->ui()->mainTemplate()->setContent($tpl->get());
+        $this->addInfoTab();
+
+        if ($ilAccess->checkAccess("write", "", $this->object->getRefId())) {
+            $this->tabs->addTab(
+                "settings",
+                $this->txt("settings"),
+                $ilCtrl->getLinkTarget($this, "editProperties")
+            );
+        }
+
+        $this->addPermissionTab();
+        $this->activateTab();
+    }
+    /**
+     * We need this method if we can't access the tabs otherwise...
+     */
+    private function activateTab(): void
+    {
+        $next_class = $this->ctrl->getCmdClass();
     }
 
-    public function edit(): void
+
+    public function editProperties(): void
     {
-        $this->setTabs();
+        // $this->setTabs();
         $this->tabs_gui->activateTab("settings");
 
-        $form = $this->initEditForm();
+        $form = $this->initPropertiesForm();
         global $DIC;
-        echo($form->getHTML());
-        $DIC->ui()->mainTemplate()->setContent($form->getHTML());
+        $renderer = $DIC->ui()->renderer();
+        $this->tpl->setContent($renderer->render($form));
+    }
+
+    /**
+     * @throws ilCtrlException
+     */
+    protected function initPropertiesForm(): Standard
+    {
+        global $DIC;
+
+        $ui = $DIC->ui()->factory();
+        $lng = $DIC->language();
+        $ctrl = $DIC->ctrl();
+
+        $url1 = $ui->input()->field()->text($this->plugin->txt("metrics_api_url"))
+            ->withRequired(true)
+            ->withValue($this->object->getApiUrl1())
+            ->withByline($this->plugin->txt("metrics_api_url_info"));
+
+        $url2 = $ui->input()->field()->text($this->plugin->txt("status_api_url"))
+            ->withValue($this->object->getApiUrl2())
+            ->withByline($this->plugin->txt("status_api_url_info"));
+
+        $form_action = $ctrl->getFormAction($this, "saveProperties");
+        $form_fields = [
+            "api_url_1" => $url1,
+            "api_url_2" => $url2
+        ];
+
+        return $ui->input()->container()->form()->standard($form_action, $form_fields);
+    }
+
+    /**
+     * @throws ilCtrlException
+     */
+    protected function saveProperties(): void
+    {
+        global $DIC;
+        $request = $DIC->http()->request();
+        $form = $this->initPropertiesForm();
+
+        if ($request->getMethod() == "POST") {
+            $form = $form->withRequest($request);
+            $result = $form->getData();
+            $this->object->setApiUrl1($result["api_url_1"]);
+            $this->object->setApiUrl2($result["api_url_2"]);
+            $this->object->update();
+            $this->tpl->setOnScreenMessage("success", $this->plugin->txt("update_successful"), true);
+            $this->ctrl->redirect($this, "editProperties");
+        }
     }
 
     public function update(): void
@@ -180,45 +195,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $this->ctrl->redirect($this, self::CMD_VIEW);
         }
     }
-
-    protected function initEditForm(): ilPropertyFormGUI
-    {
-        global $DIC;
-
-        $form = new ilPropertyFormGUI();
-        $form->setFormAction($this->ctrl->getFormAction($this));
-        $form->setTitle($this->plugin->txt("edit_settings"));
-
-        $url1 = new ilTextInputGUI($this->plugin->txt("metrics_api_url"), "api_url_1");
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $url1->setValue($this->object->getApiUrl1());
-            $url1->setRequired(true);
-            $url1->setInfo($this->plugin->txt("metrics_api_url_info"));
-            $form->addItem($url1);
-        }
-
-        $url2 = new ilTextInputGUI($this->plugin->txt("status_api_url"), "api_url_2");
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $url2->setValue($this->object->getApiUrl2());
-            $url2->setInfo($this->plugin->txt("status_api_url_info"));
-            $form->addItem($url2);
-        }
-        $form->addCommandButton(self::CMD_UPDATE, $DIC->language()->txt("save"));
-        return $form;
-    }
-
-    protected function setTabs(): void
-    {
-        global $DIC;
-
-        $DIC->tabs()->addTab("view", $DIC->language()->txt("view"),
-            $this->ctrl->getLinkTarget($this, self::CMD_VIEW));
-
-        if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
-            $DIC->tabs()->addTab("settings", $DIC->language()->txt("settings"),
-                $this->ctrl->getLinkTarget($this, self::CMD_EDIT));
-        }
-    }
+    
 
     private function formatObservabilityData(array $data, string $type): string
     {
@@ -283,19 +260,63 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         return $html;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getAfterCreationCmd(): string
+    public function showContent(): void
     {
-        return self::getStartCmd();
+        /**
+         * @var $DIC \ILIAS\DI\Container
+         */
+        global $DIC;
+
+        $this->setTabs();
+        $tpl = $DIC['tpl'];
+        $this->tabs_gui->activateTab('view');
+
+        $info = new ilTemplate('tpl.content.html', true, true, $this->plugin->getDirectory());
+        
+        if ($this->object instanceof ilObjObservabilityAPI) {
+            $data1 = $this->object->fetchApiData1();
+        }
+        if ($this->object instanceof ilObjObservabilityAPI) {
+            $data2 = $this->object->fetchApiData2();
+        }
+        
+        $info->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
+        $info->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
+        $info->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("no_data_available"));
+
+        $has_data = false;
+
+        if ($data1) {
+            $info->setCurrentBlock("api_data_1");
+            $info->setVariable("API_DATA_1", $this->formatObservabilityData($data1, "metrics"));
+            $info->parseCurrentBlock();
+            $has_data = true;
+        }
+
+        if ($data2) {
+            $info->setCurrentBlock("api_data_2");
+            $info->setVariable("API_DATA_2", $this->formatObservabilityData($data2, "status"));
+            $info->parseCurrentBlock();
+            $has_data = true;
+        }
+
+        if (!$has_data) {
+            $info->setCurrentBlock("no_data");
+            $info->parseCurrentBlock();
+        }
+
+        if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
+            $toolbar = $DIC->toolbar();
+            $toolbar->addComponent(
+                $DIC->ui()->factory()->button()->standard(
+                    $this->plugin->txt("refresh_data"),
+                    $this->ctrl->getLinkTarget($this, self::CMD_REFRESH)
+                )
+            );
+        }
+
+        $tpl->setContent($info->get());
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getStandardCmd(): string
-    {
-        return self::getStartCmd();
-    }
+    
 }
