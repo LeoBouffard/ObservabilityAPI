@@ -109,7 +109,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
     public function editProperties(): void
     {
-        // $this->setTabs();
         $this->tabs_gui->activateTab("settings");
 
         $form = $this->initPropertiesForm();
@@ -267,7 +266,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
          */
         global $DIC;
 
-        $this->setTabs();
         $tpl = $DIC['tpl'];
         $this->tabs_gui->activateTab('view');
 
