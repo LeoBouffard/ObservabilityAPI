@@ -59,7 +59,7 @@ class ilObjObservabilityAPIListGUI extends ilObjectPluginListGUI
 
         return [
             [
-                "cmd"        => ilObjObservabilityAPIGUI::getStartCmd(),
+                "cmd"        => "showContent",
                 "permission" => "read",
                 "default"    => true,
             ]
