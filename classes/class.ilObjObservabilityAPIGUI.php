@@ -9,8 +9,8 @@ use \ILIAS\UI\Component\Input\Container\Form\Standard;
  * This class handles the creation of a Observability repository object.
  * It also serves as the entry point of all repository controllers.
  *
- * @ilCtrl_isCalledBy ilObjWhiteboardGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
- * @ilCtrl_Calls      ilObjWhiteboardGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilExportGUI
+ * @ilCtrl_isCalledBy ilObjObservabilityAPIGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
+ * @ilCtrl_Calls      ilObjObservabilityAPIGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilExportGUI
  */
 class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 {
