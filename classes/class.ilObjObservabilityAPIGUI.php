@@ -80,7 +80,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         if ($ilAccess->checkAccess("read", "", $this->object->getRefId())) {
             $this->tabs->addTab(
                 "view",
-                $this->txt("view"),
+                "view",
                 $ilCtrl->getLinkTarget($this, "showContent")
             );
         }
@@ -90,7 +90,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         if ($ilAccess->checkAccess("write", "", $this->object->getRefId())) {
             $this->tabs->addTab(
                 "settings",
-                $this->txt("settings"),
+                "settings",
                 $ilCtrl->getLinkTarget($this, "editProperties")
             );
         }
