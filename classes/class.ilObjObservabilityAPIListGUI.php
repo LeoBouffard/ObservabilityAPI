@@ -71,7 +71,7 @@ class ilObjObservabilityAPIListGUI extends ilObjectPluginListGUI
      */
     public function getCommandLink($cmd): string
     {
-        if ($cmd === ilObjObservabilityAPIGUI::getStartCmd()) {
+        if ($cmd === "showContent") {
             return $this->ctrl->getLinkTargetByClass(
                 [ilObjPluginDispatchGUI::class, ilObjObservabilityAPIGUI::class],
                 $cmd
