@@ -244,7 +244,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         
         $info->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
         $info->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
-        $info->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("no_data_available"));
 
         $has_data = false;
 
@@ -263,8 +262,17 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         }
 
         if (!$has_data) {
+            $info->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("all_data_available"));
+            $info->setVariable("CLASS_NO_DATA_AVAILABLE", $this->plugin->txt("success"));
             $info->setCurrentBlock("no_data");
-            // $info->parseCurrentBlock();
+            $info->parseCurrentBlock();
+        }
+
+        else {
+            $info->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("no_data_available"));
+            $info->setVariable("CLASS_NO_DATA_AVAILABLE", $this->plugin->txt("warning"));
+            $info->setCurrentBlock("no_data");
+            $info->parseCurrentBlock();
         }
 
         if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
