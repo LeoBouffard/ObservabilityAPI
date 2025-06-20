@@ -262,9 +262,9 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $has_data = true;
         }
 
-        if ($has_data) {
+        if (!$has_data) {
             $info->setCurrentBlock("no_data");
-            $info->parseCurrentBlock();
+            // $info->parseCurrentBlock();
         }
 
         if ($this->access_handler->checkAccess("write", "", $this->object->getRefId())) {
