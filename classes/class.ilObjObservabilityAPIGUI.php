@@ -18,13 +18,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
     protected ilTabsGUI $tabs;
     public ilGlobalTemplateInterface $tpl;
 
-
-    public const CMD_VIEW = 'view';
-    public const CMD_EDIT = 'edit';
-    public const CMD_UPDATE = 'update';
-    public const CMD_REFRESH = 'refresh';
-    public const CMD_EDIT_PERMISSIONS = 'perm';
-
     protected function afterConstructor(): void
     {
         global $ilCtrl, $ilTabs, $tpl;
@@ -165,35 +158,6 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $this->ctrl->redirect($this, "editProperties");
         }
     }
-
-    public function update(): void
-    {
-        global $DIC;
-
-        $form = $this->initEditForm();
-        if ($form->checkInput()) {
-            if ($this->object instanceof ilObjObservabilityAPI) {
-                $this->object->setApiUrl1($form->getInput("api_url_1"));
-                $this->object->setApiUrl2($form->getInput("api_url_2"));
-                $this->object->update();
-                $this->object->refreshCache();
-
-                $DIC->ctrl()->redirect($this, self::CMD_VIEW);
-            }
-        } else {
-            $form->setValuesByPost();
-            echo $form->getHTML();
-            $DIC->ui()->mainTemplate()->setContent($form->getHTML());
-        }
-    }
-
-    public function refresh(): void
-    {
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $this->object->refreshCache();
-            $this->ctrl->redirect($this, self::CMD_VIEW);
-        }
-    }
     
 
     private function formatObservabilityData(array $data, string $type): string
@@ -308,7 +272,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $toolbar->addComponent(
                 $DIC->ui()->factory()->button()->standard(
                     $this->plugin->txt("refresh_data"),
-                    $this->ctrl->getLinkTarget($this, self::CMD_REFRESH)
+                    $this->ctrl->getLinkTarget($this, "showContent")
                 )
             );
         }
