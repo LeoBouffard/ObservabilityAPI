@@ -245,33 +245,16 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         $info->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
         $info->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
 
-        $has_data = false;
 
         if ($data1) {
             $info->setCurrentBlock("api_data_1");
             $info->setVariable("API_DATA_1", $this->formatObservabilityData($data1, "metrics"));
             $info->parseCurrentBlock();
-            $has_data = true;
         }
 
         if ($data2) {
             $info->setCurrentBlock("api_data_2");
             $info->setVariable("API_DATA_2", $this->formatObservabilityData($data2, "status"));
-            $info->parseCurrentBlock();
-            $has_data = true;
-        }
-
-        if (!$has_data) {
-            $info->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("all_data_available"));
-            $info->setVariable("CLASS_NO_DATA_AVAILABLE", $this->plugin->txt("success"));
-            $info->setCurrentBlock("no_data");
-            $info->parseCurrentBlock();
-        }
-
-        else {
-            $info->setVariable("TXT_NO_DATA_AVAILABLE", $this->plugin->txt("no_data_available"));
-            $info->setVariable("CLASS_NO_DATA_AVAILABLE", $this->plugin->txt("warning"));
-            $info->setCurrentBlock("no_data");
             $info->parseCurrentBlock();
         }
 
