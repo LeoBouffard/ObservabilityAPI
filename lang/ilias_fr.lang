@@ -18,12 +18,12 @@ fold_create_xobs#:#Créer ObservabilityAPI
 root_create_xobs#:#Créer ObservabilityAPI
 cat_create_xobs#:#Créer ObservabilityAPI
 metrics_api_url#:#URL API Métriques
-status_api_url#:#URL API Statut (optionnel)
+status_api_url#:#URL API Infos
 metrics_api_url_info#:#URL de l'API retournant les métriques d'observabilité au format JSON
-status_api_url_info#:#URL de l'API retournant le statut système au format JSON
+status_api_url_info#:#URL de l'API retournant les infos du système au format JSON
 edit_settings#:#Modifier les paramètres
 observability_metrics#:#Métriques d'Observabilité
-system_status#:#Statut Système
+system_status#:#Infos Système
 no_data_available#:#Aucune donnée disponible
 api_error#:#Erreur lors de la récupération des données API
 refresh_data#:#Actualiser les données

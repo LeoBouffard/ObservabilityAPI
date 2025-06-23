@@ -127,6 +127,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             ->withByline($this->plugin->txt("metrics_api_url_info"));
 
         $url2 = $ui->input()->field()->text($this->plugin->txt("status_api_url"))
+            ->withRequired(true)
             ->withValue($this->object->getApiUrl2())
             ->withByline($this->plugin->txt("status_api_url_info"));
 

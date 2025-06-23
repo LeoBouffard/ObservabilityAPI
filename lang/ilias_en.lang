@@ -18,12 +18,12 @@ fold_create_xobs#:#Create ObservabilityAPI
 root_create_xobs#:#Create ObservabilityAPI
 cat_create_xobs#:#Create ObservabilityAPI
 metrics_api_url#:#Metrics API URL
-status_api_url#:#Status API URL (optional)
+status_api_url#:#Infos API URL
 metrics_api_url_info#:#URL of the API returning observability metrics in JSON format
-status_api_url_info#:#URL of the API returning system status in JSON format
+status_api_url_info#:#URL of the API returning system infos in JSON format
 edit_settings#:#Edit Settings
 observability_metrics#:#Observability Metrics
-system_status#:#System Status
+system_status#:#System Infos
 no_data_available#:#No data available
 api_error#:#Error fetching API data
 refresh_data#:#Refresh Data
