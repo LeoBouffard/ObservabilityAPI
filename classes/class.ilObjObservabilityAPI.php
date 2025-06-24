@@ -5,8 +5,8 @@ error_reporting(E_ALL);
 
 class ilObjObservabilityAPI extends ilObjectPlugin
 {
-    private string $api_url_1 = 'http://127.0.0.1:8000/info';
-    private string $api_url_2 = 'http://127.0.0.1:8000/health';
+    private string $api_url_1 = 'http://127.0.0.1:8000/health';
+    private string $api_url_2 = 'http://127.0.0.1:8000/info';
     private ?array $cached_data_1 = null;
     private ?array $cached_data_2 = null;
     
