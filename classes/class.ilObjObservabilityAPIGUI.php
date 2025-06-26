@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use \ILIAS\UI\Component\Input\Container\Form\Standard;
-use Symfony\Component\Yaml\Yaml;
 
 
 
@@ -172,8 +171,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         } elseif ($type === "status") {
             $html .= $this->formatStatusData($data);
         } else {
-            $yaml = Yaml::dump($data, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-            $html .= "<pre class='yaml-data'>" . htmlspecialchars($yaml) . "</pre>";
+            $html .= "<pre class='json-data'>" . json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
         }
 
         $html .= "</div>";
@@ -193,8 +191,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             } elseif (is_array($value)) {
                 $html .= "<div class='metric-section'>";
                 $html .= "<h4>" . htmlspecialchars($key) . "</h4>";
-                $yaml = Yaml::dump($value, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-                $html .= "<pre class='yaml-data'>" . htmlspecialchars($yaml) . "</pre>";
+                $html .= "<pre>" . json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
                 $html .= "</div>";
             }
         }
@@ -218,8 +215,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             } elseif (is_string($value) || is_numeric($value)) {
                 $html .= "<span class='status-value'>" . htmlspecialchars($value) . "</span>";
             } else {
-                $yaml = Yaml::dump($value, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-                $html .= "<pre class='yaml-data'>" . htmlspecialchars($yaml) . "</pre>";
+                $html .= "<pre>" . json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "</pre>";
             }
 
             $html .= "</div>";
