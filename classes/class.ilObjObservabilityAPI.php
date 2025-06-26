@@ -5,10 +5,10 @@ error_reporting(E_ALL);
 
 class ilObjObservabilityAPI extends ilObjectPlugin
 {
-    private string $api_url_1 = 'http://127.0.0.1:8000/health';
-    private string $api_url_2 = 'http://127.0.0.1:8000/info';
-    private ?array $cached_data_1 = null;
-    private ?array $cached_data_2 = null;
+    private string $api_url_health = 'http://127.0.0.1:8000/health';
+    private string $api_url_info = 'http://127.0.0.1:8000/info';
+    private ?array $cached_data_health = null;
+    private ?array $cached_data_info = null;
     
     public function __construct(int $a_id = 0)
     {
@@ -26,10 +26,10 @@ class ilObjObservabilityAPI extends ilObjectPlugin
         global $DIC;
         
         $DIC->database()->manipulate(
-            "INSERT INTO rep_robj_xobs_data (obj_id, api_url_1, api_url_2) VALUES (" .
+            "INSERT INTO rep_robj_xobs_data (obj_id, api_url_health, api_url_info) VALUES (" .
             $DIC->database()->quote($this->getId(), 'integer') . "," .
-            $DIC->database()->quote($this->getApiUrl1(), 'text') . "," .
-            $DIC->database()->quote($this->getApiUrl2(), 'text') . ")"
+            $DIC->database()->quote($this->getApiUrlHealth(), 'text') . "," .
+            $DIC->database()->quote($this->getApiUrlInfo(), 'text') . ")"
         );
     }
     
@@ -43,8 +43,8 @@ class ilObjObservabilityAPI extends ilObjectPlugin
         );
         
         if ($rec = $DIC->database()->fetchAssoc($set)) {
-            $this->api_url_1 = $rec['api_url_1'] ?? '';
-            $this->api_url_2 = $rec['api_url_2'] ?? '';
+            $this->api_url_health = $rec['api_url_health'] ?? '';
+            $this->api_url_info = $rec['api_url_info'] ?? '';
         }
     }
     
@@ -54,8 +54,8 @@ class ilObjObservabilityAPI extends ilObjectPlugin
         
         $DIC->database()->manipulate(
             "UPDATE rep_robj_xobs_data SET " .
-            "api_url_1 = " . $DIC->database()->quote($this->api_url_1, 'text') . "," .
-            "api_url_2 = " . $DIC->database()->quote($this->api_url_2, 'text') . " " .
+            "api_url_health = " . $DIC->database()->quote($this->api_url_health, 'text') . "," .
+            "api_url_info = " . $DIC->database()->quote($this->api_url_info, 'text') . " " .
             "WHERE obj_id = " . $DIC->database()->quote($this->getId(), 'integer')
         );
     }
@@ -71,41 +71,41 @@ class ilObjObservabilityAPI extends ilObjectPlugin
     }
     
     // Getters et Setters
-    public function setApiUrl1(string $url): void
+    public function setApiUrlHealth(string $url): void
     {
-        $this->api_url_1 = $url;
+        $this->api_url_health = $url;
     }
     
-    public function getApiUrl1(): string
+    public function getApiUrlHealth(): string
     {
-        return $this->api_url_1;
+        return $this->api_url_health;
     }
     
-    public function setApiUrl2(string $url): void
+    public function setApiUrlInfo(string $url): void
     {
-        $this->api_url_2 = $url;
+        $this->api_url_info = $url;
     }
     
-    public function getApiUrl2(): string
+    public function getApiUrlInfo(): string
     {
-        return $this->api_url_2;
+        return $this->api_url_info;
     }
     
     // Méthodes pour récupérer les données API
-    public function fetchApiData1(): ?array
+    public function fetchApiDataHealth(): ?array
     {
-        if ($this->cached_data_1 === null && !empty($this->api_url_1)) {
-            $this->cached_data_1 = $this->fetchJsonData($this->api_url_1);
+        if ($this->cached_data_health === null && !empty($this->api_url_health)) {
+            $this->cached_data_health = $this->fetchJsonData($this->api_url_health);
         }
-        return $this->cached_data_1;
+        return $this->cached_data_health;
     }
     
-    public function fetchApiData2(): ?array
+    public function fetchApiDataInfo(): ?array
     {
-        if ($this->cached_data_2 === null && !empty($this->api_url_2)) {
-            $this->cached_data_2 = $this->fetchJsonData($this->api_url_2);
+        if ($this->cached_data_info === null && !empty($this->api_url_info)) {
+            $this->cached_data_info = $this->fetchJsonData($this->api_url_info);
         }
-        return $this->cached_data_2;
+        return $this->cached_data_info;
     }
     
     private function fetchJsonData(string $url): ?array
@@ -139,7 +139,7 @@ class ilObjObservabilityAPI extends ilObjectPlugin
     // Méthode pour rafraîchir le cache
     public function refreshCache(): void
     {
-        $this->cached_data_1 = null;
-        $this->cached_data_2 = null;
+        $this->cached_data_health = null;
+        $this->cached_data_info = null;
     }
 }

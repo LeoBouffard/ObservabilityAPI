@@ -10,12 +10,12 @@ $fields = array(
         'length' => 4,
         'notnull' => true
     ),
-    'api_url_1' => array(
+    'api_url_health' => array(
         'type' => 'text',
         'length' => 512,
         'notnull' => false
     ),
-    'api_url_2' => array(
+    'api_url_info' => array(
         'type' => 'text',
         'length' => 512,
         'notnull' => false

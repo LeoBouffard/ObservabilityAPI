@@ -121,20 +121,20 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         $lng = $DIC->language();
         $ctrl = $DIC->ctrl();
 
-        $url1 = $ui->input()->field()->text($this->plugin->txt("metrics_api_url"))
+        $url_health = $ui->input()->field()->text($this->plugin->txt("metrics_api_url"))
             ->withRequired(true)
-            ->withValue($this->object->getApiUrl1())
+            ->withValue($this->object->getApiUrlHealth())
             ->withByline($this->plugin->txt("metrics_api_url_info"));
 
-        $url2 = $ui->input()->field()->text($this->plugin->txt("status_api_url"))
+        $url_info = $ui->input()->field()->text($this->plugin->txt("status_api_url"))
             ->withRequired(true)
-            ->withValue($this->object->getApiUrl2())
+            ->withValue($this->object->getApiUrlInfo())
             ->withByline($this->plugin->txt("status_api_url_info"));
 
         $form_action = $ctrl->getFormAction($this, "saveProperties");
         $form_fields = [
-            "api_url_1" => $url1,
-            "api_url_2" => $url2
+            "api_url_health" => $url_health,
+            "api_url_info" => $url_info
         ];
 
         return $ui->input()->container()->form()->standard($form_action, $form_fields);
@@ -152,8 +152,8 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         if ($request->getMethod() == "POST") {
             $form = $form->withRequest($request);
             $result = $form->getData();
-            $this->object->setApiUrl1($result["api_url_1"]);
-            $this->object->setApiUrl2($result["api_url_2"]);
+            $this->object->setApiUrlHealth($result["api_url_health"]);
+            $this->object->setApiUrlInfo($result["api_url_info"]);
             $this->object->update();
             $this->tpl->setOnScreenMessage("success", $this->plugin->txt("update_successful"), true);
             $this->ctrl->redirect($this, "editProperties");
@@ -237,25 +237,25 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
         $info = new ilTemplate('tpl.content.html', true, true, $this->plugin->getDirectory());
         
         if ($this->object instanceof ilObjObservabilityAPI) {
-            $data1 = $this->object->fetchApiData1();
+            $data_health = $this->object->fetchApiDataHealth();
         }
         if ($this->object instanceof ilObjObservabilityAPI) {
-            $data2 = $this->object->fetchApiData2();
+            $data_info = $this->object->fetchApiDataInfo();
         }
         
-        $info->setVariable("TXT_API_DATA_SECTION_1", $this->plugin->txt("observability_metrics"));
-        $info->setVariable("TXT_API_DATA_SECTION_2", $this->plugin->txt("system_status"));
+        $info->setVariable("TXT_API_DATA_SECTION_HEALTH", $this->plugin->txt("observability_metrics"));
+        $info->setVariable("TXT_API_DATA_SECTION_INFO", $this->plugin->txt("system_status"));
 
 
-        if ($data1) {
-            $info->setCurrentBlock("api_data_1");
-            $info->setVariable("API_DATA_1", $this->formatObservabilityData($data1, "metrics"));
+        if ($data_health) {
+            $info->setCurrentBlock("api_data_health");
+            $info->setVariable("API_DATA_HEALTH", $this->formatObservabilityData($data_health, "metrics"));
             $info->parseCurrentBlock();
         }
 
-        if ($data2) {
-            $info->setCurrentBlock("api_data_2");
-            $info->setVariable("API_DATA_2", $this->formatObservabilityData($data2, "status"));
+        if ($data_info) {
+            $info->setCurrentBlock("api_data_info");
+            $info->setVariable("API_DATA_INFO", $this->formatObservabilityData($data_info, "status"));
             $info->parseCurrentBlock();
         }
 
