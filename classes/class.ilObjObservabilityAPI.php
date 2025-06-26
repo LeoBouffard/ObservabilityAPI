@@ -95,7 +95,7 @@ class ilObjObservabilityAPI extends ilObjectPlugin
     public function fetchApiDataHealth(): ?array
     {
         if ($this->cached_data_health === null && !empty($this->api_url_health)) {
-            $this->cached_data_health = $this->fetchJsonData($this->api_url_health);
+            $this->cached_data_health = $this->fetchYamlData($this->api_url_health);
         }
         return $this->cached_data_health;
     }
@@ -103,38 +103,38 @@ class ilObjObservabilityAPI extends ilObjectPlugin
     public function fetchApiDataInfo(): ?array
     {
         if ($this->cached_data_info === null && !empty($this->api_url_info)) {
-            $this->cached_data_info = $this->fetchJsonData($this->api_url_info);
+            $this->cached_data_info = $this->fetchYamlData($this->api_url_info);
         }
         return $this->cached_data_info;
     }
     
-    private function fetchJsonData(string $url): ?array
-    {
-        try {
-            $context = stream_context_create([
-                'http' => [
-                    'timeout' => 10,
-                    'user_agent' => 'ILIAS ObservabilityAPI Plugin',
-                    'method' => 'GET',
-                    'header' => [
-                        'Accept: application/json',
-                        'Content-Type: application/json'
-                    ]
+    private function fetchYamlData(string $url): ?array
+{
+    try {
+        $context = stream_context_create([
+            'http' => [
+                'timeout' => 10,
+                'user_agent' => 'ILIAS ObservabilityAPI Plugin',
+                'method' => 'GET',
+                'header' => [
+                    'Accept: application/x-yaml',
                 ]
-            ]);
-            
-            $json = file_get_contents($url, false, $context);
-            if ($json === false) {
-                return null;
-            }
-            
-            $data = json_decode($json, true);
-            return $data ?: null;
-            
-        } catch (Exception $e) {
+            ]
+        ]);
+
+        $yaml = file_get_contents($url, false, $context);
+        if ($yaml === false) {
             return null;
         }
+
+        $data = yaml_parse($yaml);
+        return is_array($data) ? $data : null;
+
+    } catch (Exception $e) {
+        return null;
     }
+}
+
     
     // Méthode pour rafraîchir le cache
     public function refreshCache(): void
