@@ -129,7 +129,7 @@ class ilObjObservabilityAPI extends ilObjectPlugin
             return null;
         }
 
-        $data = yaml_parse($yaml);
+        $data = Yaml::parse($yaml);
         return is_array($data) ? $data : null;
 
     } catch (Exception $e) {
