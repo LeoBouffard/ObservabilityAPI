@@ -258,7 +258,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         if ($data_info) {
             $info->setCurrentBlock("api_data_info");
-            $info->setVariable("API_DATA_INFO", $this->formatObservabilityData($data_info, "status"));
+            $info->setVariable("API_DATA_INFO", "coucou");
             $info->parseCurrentBlock();
         }
 
