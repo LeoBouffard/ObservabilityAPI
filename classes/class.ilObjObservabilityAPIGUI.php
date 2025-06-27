@@ -242,12 +242,9 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         $info = new ilTemplate('tpl.content.html', true, true, $this->plugin->getDirectory());
         
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $data_health = $this->object->fetchApiDataHealth();
-        }
-        if ($this->object instanceof ilObjObservabilityAPI) {
-            $data_info = $this->object->fetchApiDataInfo();
-        }
+        $data_health = $this->object->fetchApiDataHealth();
+        $data_info = $this->object->fetchApiDataInfo();
+        
         
         $info->setVariable("TXT_API_DATA_SECTION_HEALTH", $this->plugin->txt("observability_metrics"));
         $info->setVariable("TXT_API_DATA_SECTION_INFO", $this->plugin->txt("system_status"));
@@ -255,7 +252,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         if ($data_health) {
             $info->setCurrentBlock("api_data_health");
-            $info->setVariable("API_DATA_HEALTH", $this->formatObservabilityData($data_info, "metrics"));
+            $info->setVariable("API_DATA_HEALTH", $this->formatObservabilityData($data_health, "metrics"));
             $info->parseCurrentBlock();
         }
 
