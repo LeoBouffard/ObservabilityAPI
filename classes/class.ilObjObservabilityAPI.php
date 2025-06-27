@@ -104,9 +104,8 @@ class ilObjObservabilityAPI extends ilObjectPlugin
     
     public function fetchApiDataInfo(): ?array
     {
-        if ($this->cached_data_info === null && !empty($this->api_url_info)) {
-            $this->cached_data_info = $this->fetchYamlData($this->api_url_info);
-        }
+        $this->cached_data_info = $this->fetchYamlData($this->api_url_info);
+        
         return $this->cached_data_info;
     }
     
