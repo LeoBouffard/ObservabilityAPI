@@ -205,21 +205,25 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
     private function formatStatusData(array $data): string
     {
-        $html = "<div class='metrics-grid'>";
+        $html = "<div class='status-info'>";
+        var_dump($data); // Debugging line to check the structure of $data
 
         foreach ($data as $key => $value) {
-            if (is_numeric($value)) {
-                $html .= "<div class='metric-card'>";
-                $html .= "<div class='metric-label'>" . htmlspecialchars($key) . "</div>";
-                $html .= "<div class='metric-value'>" . number_format($value, 2) . "</div>";
-                $html .= "</div>";
-            } elseif (is_array($value)) {
-                $html .= "<div class='metric-section'>";
-                $html .= "<h4>" . htmlspecialchars($key) . "</h4>";
+            $html .= "<div class='status-item'>";
+            $html .= "<span class='status-key'>" . htmlspecialchars($key) . ":</span> ";
+
+            if (is_bool($value)) {
+                $status_class = $value ? "status-ok" : "status-error";
+                $status_text = $value ? "OK" : "ERROR";
+                $html .= "<span class='{$status_class}'>{$status_text}</span>";
+            } elseif (is_string($value) || is_numeric($value)) {
+                $html .= "<span class='status-value'>" . htmlspecialchars($value) . "</span>";
+            } else {
                 $yaml = Yaml::dump($value, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
                 $html .= "<pre class='yaml-data'>" . htmlspecialchars($yaml) . "</pre>";
-                $html .= "</div>";
             }
+
+            $html .= "</div>";
         }
 
         $html .= "</div>";
@@ -251,7 +255,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
 
         if ($data_health) {
             $info->setCurrentBlock("api_data_health");
-            $info->setVariable("API_DATA_HEALTH", $this->formatObservabilityData($data_health, "metrics"));
+            $info->setVariable("API_DATA_HEALTH", $this->formatObservabilityData($data_info, "metrics"));
             $info->parseCurrentBlock();
         }
 
