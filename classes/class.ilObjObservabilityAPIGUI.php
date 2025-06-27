@@ -212,6 +212,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
             $html .= "<span class='status-key'>" . htmlspecialchars($key) . ":</span> ";
 
             if (is_bool($value)) {
+                var_dump($value);
                 $status_class = $value ? "status-ok" : "status-error";
                 $status_text = $value ? "OK" : "ERROR";
                 $html .= "<span class='{$status_class}'>{$status_text}</span>";
