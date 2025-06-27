@@ -206,7 +206,7 @@ class ilObjObservabilityAPIGUI extends ilObjectPluginGUI
     private function formatStatusData(array $data): string
     {
         $html = "<div class='status-info'>";
-        var_dump($data); // Debugging line to check the structure of $data
+        $html .= $data; // Debugging line to check the structure of $data
 
         foreach ($data as $key => $value) {
             $html .= "<div class='status-item'>";
