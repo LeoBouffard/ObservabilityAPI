@@ -3,6 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+use Symfony\Component\Yaml\Yaml;
+
 class ilObjObservabilityAPI extends ilObjectPlugin
 {
     private string $api_url_health = 'http://127.0.0.1:8000/health.yaml';
