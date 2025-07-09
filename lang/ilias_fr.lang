@@ -1,0 +1,29 @@
+<!-- language file start -->
+obj_xobs#:#ObservabilityAPI
+objs_xobs#:#ObservabilityAPI
+obj_xobs_duplicate#:#Copier
+objs_xobs_duplicate#:#Copier ObservabilityAPI
+obj_xobs_select#:#Sélectionner ObservabilityAPI
+xobs_add#:#Ajouter ObservabilityAPI
+xobs_new#:#Ajouter Nouvelle ObservabilityAPI
+xobs_read#:#Accès en lecture à ObservabilityAPI
+xobs_write#:#Modifier ObservabilityAPI
+xobs_delete#:#Supprimer ObservabilityAPI
+xobs_visible#:#ObservabilityAPI est visible
+xobs_read_learning_progress#:#Accès au suivi d'apprentissage
+xobs_edit_learning_progress#:#Modifier le suivi d'apprentissage
+crs_create_xobs#:#Créer ObservabilityAPI
+grp_create_xobs#:#Créer ObservabilityAPI
+fold_create_xobs#:#Créer ObservabilityAPI
+root_create_xobs#:#Créer ObservabilityAPI
+cat_create_xobs#:#Créer ObservabilityAPI
+metrics_api_url#:#URL API Métriques
+status_api_url#:#URL API Infos
+metrics_api_url_info#:#URL de l'API retournant les métriques d'observabilité au format JSON
+status_api_url_info#:#URL de l'API retournant les infos du système au format JSON
+edit_settings#:#Modifier les paramètres
+observability_metrics#:#Métriques d'Observabilité
+system_status#:#Infos Système
+no_data_available#:#Aucune donnée disponible
+api_error#:#Erreur lors de la récupération des données API
+refresh_data#:#Actualiser les données

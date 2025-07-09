@@ -1,8 +1,11 @@
 <?php
-$id = "ObservabilityAPI";  // Mets le bon ID du plugin ici
-$version = "1.0.0"; // Adapte selon ta version
+$id = "xobs";
+$version = "1.0.0";
 $ilias_min_version = "8.0";
 $ilias_max_version = "8.999";
 $responsible = "Léo Bouffard";
 $responsible_mail = "leo.bouffard@intradef.gouv.fr";
+$supports_export = false;
+$learning_progress = false;
+
 ?>

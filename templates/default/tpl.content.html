@@ -1,0 +1,196 @@
+<div class="observability-api-content">
+    <!-- BEGIN api_data_health -->
+    <div class="panel panel-primary observability-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="fa fa-chart-line"></i> {TXT_API_DATA_SECTION_HEALTH}
+            </h3>
+        </div>
+        <div class="panel-body">
+            {API_DATA_HEALTH}
+        </div>
+    </div>
+    <!-- END api_data_health -->
+    
+    <!-- BEGIN api_data_info -->
+    <div class="panel panel-info observability-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <i class="fa fa-server"></i> {TXT_API_DATA_SECTION_INFO}
+            </h3>
+        </div>
+        <div class="panel-body">
+            {API_DATA_INFO}
+        </div>
+    </div>
+    <!-- END api_data_info -->
+</div>
+
+<style>
+.observability-api-content {
+    margin: 20px 0;
+}
+
+.observability-panel {
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.observability-panel .panel-heading {
+    background: linear-gradient(135deg, #007cba 0%, #0056b3 100%);
+    color: white;
+    border: none;
+}
+
+.observability-panel.panel-info .panel-heading {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+}
+
+.observability-data {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 15px 0;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.metric-label {
+    font-size: 12px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007cba;
+    line-height: 1.2;
+}
+
+.metric-section {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.metric-section h4 {
+    margin: 0 0 10px 0;
+    color: #495057;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.status-info {
+    background: white;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.status-item:last-child {
+    border-bottom: none;
+}
+
+.status-key {
+    font-weight: 600;
+    color: #495057;
+    min-width: 150px;
+    margin-right: 10px;
+}
+
+.status-value {
+    color: #6c757d;
+}
+
+.status-ok {
+    color: #28a745;
+    font-weight: bold;
+    background: #d4edda;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.status-error {
+    color: #dc3545;
+    font-weight: bold;
+    background: #f8d7da;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.json-data {
+    background: #2d3748;
+    color: #e2e8f0;
+    border-radius: 6px;
+    padding: 15px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: 0;
+}
+
+pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    background: #f6f8fa;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #e1e4e8;
+}
+
+@media (max-width: 768px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .status-key {
+        min-width: auto;
+        margin-bottom: 5px;
+    }
+}
+</style>
+
